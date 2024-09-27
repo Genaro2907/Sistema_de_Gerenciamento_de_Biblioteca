@@ -13,7 +13,7 @@ public class Book {
 	public Book(String title, String author, Boolean bookAvailable) {
 		this.title = title;
 		this.author = author;
-		this.bookAvailable = bookAvailable;
+		this.bookAvailable = true;
 	}
 
 
