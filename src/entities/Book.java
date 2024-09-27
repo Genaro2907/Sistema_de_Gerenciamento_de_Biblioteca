@@ -1,5 +1,7 @@
 package entities;
 
+import java.util.Objects;
+
 public class Book {
 	
 	private String title;
@@ -10,7 +12,7 @@ public class Book {
 	public Book() {
 	}
 
-	public Book(String title, String author, Boolean bookAvailable) {
+	public Book(String title, String author) {
 		this.title = title;
 		this.author = author;
 		this.bookAvailable = true;
@@ -36,16 +38,11 @@ public class Book {
 	public void setAuthor(String author) {
 		this.author = author;
 	}
+	
+	public boolean isBookAvailable() {
+        return bookAvailable;
+    }
 
-
-	public Boolean getBookAvailable() {
-		return bookAvailable;
-	}
-
-
-	public void setBookAvailable(Boolean bookAvailable) {
-		this.bookAvailable = bookAvailable;
-	}
 	
 	//Logica para empresar o livro
 	public void borrowBook() {
@@ -64,6 +61,24 @@ public class Book {
     public String toString() {
         return title + " - " + author;
     }
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(bookAvailable);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Book other = (Book) obj;
+		return Objects.equals(bookAvailable, other.bookAvailable);
+	}
+	
 	
 	
 
