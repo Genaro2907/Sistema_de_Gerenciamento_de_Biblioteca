@@ -2,6 +2,8 @@ package entities;
 
 import java.util.Objects;
 
+import entities.exception.LibraryException;
+
 public class Book {
 	
 	private String title;
@@ -48,7 +50,7 @@ public class Book {
 		if (bookAvailable) {
 			bookAvailable = false;
         } else {
-            throw new RuntimeException("O livro já está emprestado!");
+            throw new LibraryException("O livro já está emprestado!");
         }	
 	}
 	//Logica para devolver o livro
