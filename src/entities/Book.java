@@ -19,7 +19,6 @@ public class Book {
 	}
 
 
-
 	public String getTitle() {
 		return title;
 	}
