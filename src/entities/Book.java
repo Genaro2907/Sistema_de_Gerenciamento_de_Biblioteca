@@ -5,82 +5,80 @@ import java.util.Objects;
 import entities.exception.LibraryException;
 
 public class Book {
-	
+
 	private String title;
 	private String author;
-	private Boolean bookAvailable;
-	
-	
+	private boolean isAvailable; 
+
 	public Book() {
 	}
 
 	public Book(String title, String author) {
 		this.title = title;
 		this.author = author;
-		this.bookAvailable = true;
+		this.isAvailable = true; 
 	}
 
-
+	
 	public String getTitle() {
 		return title;
 	}
-
 
 	public void setTitle(String title) {
 		this.title = title;
 	}
 
-
 	public String getAuthor() {
 		return author;
 	}
 
-
 	public void setAuthor(String author) {
 		this.author = author;
 	}
-	
-	public boolean isBookAvailable() {
-        return bookAvailable;
-    }
+
+	public boolean isAvailable() {
+		return isAvailable;
+	}
 
 	
-	//Logica para empresar o livro
 	public void borrowBook() {
-		if (bookAvailable) {
-			bookAvailable = false;
-        } else {
-            throw new LibraryException("O livro já está emprestado!");
-        }	
+		if (isAvailable) {
+			isAvailable = false;
+			System.out.println("O livro '" + title + "' foi emprestado com sucesso.");
+		} else {
+			throw new LibraryException("O livro '" + title + "' já está emprestado.");
+		}
 	}
-	//Logica para devolver o livro
+
+	
 	public void returnBook() {
-		bookAvailable = true;
+		if (!isAvailable) {
+			isAvailable = true;
+			System.out.println("O livro '" + title + "' foi devolvido com sucesso.");
+		} else {
+			throw new LibraryException("O livro '" + title + "' já está disponível e não pode ser devolvido.");
+		}
 	}
+
 	
 	@Override
-    public String toString() {
-        return title + " - " + author;
-    }
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(bookAvailable);
+	public String toString() {
+		return "'" + title + "' de " + author + " (Disponível: " + (isAvailable ? "Sim" : "Não") + ")";
 	}
 
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
+		if (obj == null || getClass() != obj.getClass())
 			return false;
 		Book other = (Book) obj;
-		return Objects.equals(bookAvailable, other.bookAvailable);
+		return Objects.equals(title, other.title) && Objects.equals(author, other.author);
 	}
-	
-	
-	
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(title, author);
+	}
 }

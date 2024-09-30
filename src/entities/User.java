@@ -9,16 +9,17 @@ public class User {
 	private String cpf;
 	private String email;
 
-	private List<Book> borrowedBook = new ArrayList<>();
+	private List<Book> borrowedBooks;
 
 	public User() {
-
+		this.borrowedBooks = new ArrayList<>();
 	}
 
 	public User(String name, String cpf, String email) {
 		this.name = name;
 		this.cpf = cpf;
 		this.email = email;
+		this.borrowedBooks = new ArrayList<>();
 	}
 
 	public String getName() {
@@ -45,28 +46,41 @@ public class User {
 		this.email = email;
 	}
 
-	public void borrowedBook(Book book) {
-		borrowedBook.add(book);
-		
+	public List<Book> getBorrowedBooks() {
+		return borrowedBooks;
+	}
+
+	public void borrowBook(Book book) {
+		if (!borrowedBooks.contains(book)) {
+			borrowedBooks.add(book);
+			System.out.println("Livro '" + book.getTitle() + "' emprestado com sucesso!");
+		} else {
+			System.out.println("Você já pegou este livro emprestado.");
+		}
+	}
+
+	public void returnBook(Book book) {
+		if (borrowedBooks.contains(book)) {
+			borrowedBooks.remove(book);
+			System.out.println("Livro '" + book.getTitle() + "' devolvido com sucesso!");
+		} else {
+			System.out.println("Este livro não está na lista de empréstimos.");
+		}
+	}
+
+	public void showBorrowedBooks() {
+		if (!borrowedBooks.isEmpty()) {
+			System.out.println("Livros emprestados por " + name + ":");
+			for (Book book : borrowedBooks) {
+				System.out.println(" - " + book);
+			}
+		} else {
+			System.out.println("Nenhum livro emprestado.");
+		}
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(name).append(" (CPF: ").append(cpf).append(") Livro emprestado: ");
-
-		if (borrowedBook != null && !borrowedBook.isEmpty()) {
-			for (int i = 0; i < borrowedBook.size(); i++) {
-				sb.append(borrowedBook.get(i));
-				if (i < borrowedBook.size() - 1) {
-					sb.append(", ");
-				}
-			}
-		} else {
-			sb.append("Nenhum livro emprestado");
-		}
-
-		return sb.toString();
+		return name + " (CPF: " + cpf + ", Email: " + email + ")";
 	}
-
 }
